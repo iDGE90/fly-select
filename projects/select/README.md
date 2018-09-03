@@ -2,7 +2,7 @@
 
 Fly select is a simple dropdown select element with minimalistic design and customizable options.
 
-![N|Solid](https://i.imgur.com/jUMGYYK.jpg)
+![N|Solid](https://i.imgur.com/o3UhQSr.jpg)
 
 ### Simple usage:
 

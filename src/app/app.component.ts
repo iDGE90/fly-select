@@ -35,15 +35,15 @@ export class AppComponent implements OnInit {
   ];
   select = [
     {
-      label: 'Bruce Wayne',
+      label: 'Tony Stark',
       value: 1
     },
     {
-      label: 'Clark Kent',
+      label: 'Bruce Wayne',
       value: 2
     },
     {
-      label: 'Morgan Freeman',
+      label: 'Clark Kent',
       value: 3
     }
   ];
