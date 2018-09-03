@@ -1,0 +1,28 @@
+<div class="fly-select-container">
+  <div class="fly-select-wrapper" [class.open]="isOpen">
+    <div class="fly-select-head-container">
+      <div class="fly-select-head-wrapper" (click)="handleHeadClick()">
+        <span>{{selectedOption ? selectedOption.label : placeholder}}</span>
+      </div>
+    </div>
+    <div class="fly-select-body-container" *ngIf="isOpen" [@fade]>
+      <div class="fly-select-body-wrapper">
+        <div *ngFor="let option of options" (click)="handleSelectItem(option)">
+          <div class="fly-select-item-container">
+            <div
+                class="fly-select-item-wrapper"
+                [class.highlight]="isHighlight(option)"
+                (mousemove)="handleItemMouseMove(option)">
+              <ng-container *ngTemplateOutlet="layoutTemplate ? layoutTemplate : defaultTempalte;
+              context: { option: option }"></ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #defaultTempalte let-option="option">
+  <span>{{option.label}}</span>
+</ng-template>

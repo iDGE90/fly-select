@@ -1,0 +1,25 @@
+{
+  "name": "fly-select",
+  "version": "0.1.2",
+  "description": "Simple select element for Angular 6",
+  "author": "Igor Atanasov",
+  "license": "MIT",
+  "bugs": "https://github.com/iDGE90/fly-select/issues",
+  "homepage": "https://github.com/iDGE90/fly-select#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iDGE90/fly-select"
+  },
+  "keywords": [
+    "angular",
+    "angular 6",
+    "javascript",
+    "typescript",
+    "select",
+    "dropdown"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
+  }
+}
