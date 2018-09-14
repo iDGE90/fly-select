@@ -1,112 +1,89 @@
-<form [formGroup]="formOne" style="float: left; margin-right: 15px;">
-  <div style="width: 300px;">
-    <fly-select
-        (selected)="handleSelect($event)"
-        [options]="data"
-        [labelProperty]="'name'"
-        [valueProperty]="'id'"
-        [formControlName]="'select'">
-      <ng-template let-option="option">
-        <div class="hero-card">
-          <div class="image" [style.backgroundImage]="'url(' + option.original.avatar + ')'"></div>
+<div class="main-container">
+  <div class="main-wrapper">
+    <div class="headline">
+      <h1>Fly Select</h1>
+    </div>
 
-          <div class="info">
-            <div class="alias">{{option.original.alias}}</div>
-            <div class="name-company">{{option.original.name}}, {{option.original.company}}</div>
-          </div>
-        </div>
-      </ng-template>
-    </fly-select>
+    <div class="io-line">
+      <p>Custom groups layout</p>
+
+      <form [formGroup]="formOne">
+        <fly-select
+          (selected)="handleSelect($event)"
+          [options]="groupsCustom"
+          [labelProperty]="'name'"
+          [valueProperty]="'id'"
+          [formControlName]="'select'">
+          <ng-template let-group="group" flySelectGroupBody>
+            <div class="universe-card">
+              <div class="image" [style.backgroundImage]="'url(' + group.groupOriginal.avatar + ')'"></div>
+
+              <div class="info">{{group.groupLabel}}</div>
+            </div>
+          </ng-template>
+
+          <ng-template let-option="option" flySelectItemBody>
+            <div class="hero-card">
+              <div class="image" [style.backgroundImage]="'url(' + option.original.avatar + ')'"></div>
+
+              <div class="info">
+                <div class="alias">{{option.original.alias}}</div>
+                <div class="name-company">{{option.original.name}}, {{option.original.company}}</div>
+              </div>
+            </div>
+          </ng-template>
+        </fly-select>
+      </form>
+    </div>
+
+    <div class="io-line">
+      <p>Custom options layout</p>
+
+      <form [formGroup]="formOne">
+        <fly-select
+          (selected)="handleSelect($event)"
+          [options]="data"
+          [labelProperty]="'name'"
+          [valueProperty]="'id'"
+          [formControlName]="'select'">
+          <ng-template let-option="option" flySelectItemBody>
+            <div class="hero-card">
+              <div class="image" [style.backgroundImage]="'url(' + option.original.avatar + ')'"></div>
+
+              <div class="info">
+                <div class="alias">{{option.original.alias}}</div>
+                <div class="name-company">{{option.original.name}}, {{option.original.company}}</div>
+              </div>
+            </div>
+          </ng-template>
+        </fly-select>
+      </form>
+    </div>
+
+    <div class="io-line">
+      <p>Default groups layout</p>
+
+      <form [formGroup]="formTwo">
+        <fly-select
+          (selected)="handleSelect($event)"
+          [options]="groups"
+          [placeholder]="'Select option'"
+          [formControlName]="'select'">
+        </fly-select>
+      </form>
+    </div>
+
+    <div class="io-line">
+      <p>Default options layout</p>
+
+      <form [formGroup]="formTwo">
+        <fly-select
+          (selected)="handleSelect($event)"
+          [options]="select"
+          [placeholder]="'Select option'"
+          [formControlName]="'select'">
+        </fly-select>
+      </form>
+    </div>
   </div>
-</form>
-
-<form [formGroup]="formTwo" style="float: left">
-  <div style="width: 300px;">
-    <fly-select
-        (selected)="handleSelect($event)"
-        [options]="select"
-        [placeholder]="'Select option'"
-        [formControlName]="'select'">
-    </fly-select>
-  </div>
-</form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<table class="table table-striped" [mfData]="options" #mf="mfDataTable" [mfRowsOnPage]="5">-->
-  <!--<thead>-->
-  <!--<tr>-->
-    <!--<th style="width: 20%">-->
-      <!--<mfDefaultSorter by="name">Name</mfDefaultSorter>-->
-    <!--</th>-->
-    <!--<th style="width: 50%">-->
-      <!--<mfDefaultSorter by="email">Email</mfDefaultSorter>-->
-    <!--</th>-->
-    <!--<th style="width: 10%">-->
-      <!--<mfDefaultSorter by="age">Age</mfDefaultSorter>-->
-    <!--</th>-->
-    <!--<th style="width: 20%">-->
-      <!--<mfDefaultSorter by="city">City</mfDefaultSorter>-->
-    <!--</th>-->
-  <!--</tr>-->
-  <!--</thead>-->
-  <!--<tbody>-->
-  <!--<tr *ngFor="let item of mf.options">-->
-    <!--<td>{{item.name}}</td>-->
-    <!--<td>{{item.email}}</td>-->
-    <!--<td class="text-right">{{item.age}}</td>-->
-    <!--<td>{{item.city | uppercase}}</td>-->
-  <!--</tr>-->
-  <!--</tbody>-->
-  <!--<tfoot>-->
-  <!--<tr>-->
-    <!--<td colspan="4">-->
-      <!--<mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>-->
-    <!--</td>-->
-  <!--</tr>-->
-  <!--</tfoot>-->
-<!--</table>-->
-
-<!--<ngx-datatable-->
-    <!--[rows]="rows"-->
-    <!--[columns]="columns">-->
-<!--</ngx-datatable>-->
-
-<!--<enl-ngx-table [options]="options"></enl-ngx-table>-->
-
-<!--<button (click)="rev()">Reverse</button>-->
+</div>

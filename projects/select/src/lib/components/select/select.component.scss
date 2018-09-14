@@ -1,5 +1,12 @@
 :host {
   width: 100%;
+  outline: none;
+}
+
+:host(.host-focus) {
+  .fly-select-head-wrapper {
+    border-color: #4647ca;
+  }
 }
 
 .fly-select-wrapper {
@@ -7,12 +14,18 @@
 }
 
 .fly-select-head-wrapper {
-  padding: 7px 12px;
+  padding: 7px 30px 7px 12px;
   box-sizing: border-box;
   border: 1px solid #eee;
   border-radius: 4px;
   cursor: default;
   transition: .1s ease-in all;
+  user-select: none;
+
+  &.disabled {
+    cursor: not-allowed;
+    background-color: #f8f8f8;
+  }
 
   &:hover {
     border-color: #cacaca;
@@ -72,4 +85,14 @@
     background-color: rgba(70, 70, 200, 0.9);
     color: #fff;
   }
+}
+
+.fly-select-group-label {
+  padding: 3px 12px;
+  box-sizing: border-box;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background-color: #eee;
 }

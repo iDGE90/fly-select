@@ -1,28 +1,64 @@
 <div class="fly-select-container">
   <div class="fly-select-wrapper" [class.open]="isOpen">
     <div class="fly-select-head-container">
-      <div class="fly-select-head-wrapper" (click)="handleHeadClick()">
+      <div class="fly-select-head-wrapper" [class.disabled]="disabled" (click)="handleHeadClick()">
         <span>{{selectedOption ? selectedOption.label : placeholder}}</span>
       </div>
     </div>
     <div class="fly-select-body-container" *ngIf="isOpen" [@fade]>
       <div class="fly-select-body-wrapper">
-        <div *ngFor="let option of options" (click)="handleSelectItem(option)">
-          <div class="fly-select-item-container">
-            <div
-                class="fly-select-item-wrapper"
-                [class.highlight]="isHighlight(option)"
-                (mousemove)="handleItemMouseMove(option)">
-              <ng-container *ngTemplateOutlet="layoutTemplate ? layoutTemplate : defaultTempalte;
-              context: { option: option }"></ng-container>
+        <ng-container *ngIf="dataType === 'groups'">
+          <ng-container *ngFor="let group of groups; let groupIndex = index;">
+            <div class="fly-select-group-container">
+              <div class="fly-select-group-wrapper">
+                <div class="fly-select-group-label">
+                  <ng-container *ngTemplateOutlet="groupTemplate ? groupTemplate : defaultGroupTemplate; context: { group: group }"></ng-container>
+                </div>
+
+                <div class="fly-select-group-options-container">
+                  <div class="fly-select-group-wrapper">
+                    <ng-container *ngFor="let option of group.groupOptions; let optionIndex = index;">
+                      <div
+                        (click)="handleSelectItem(option)"
+                        (mousemove)="handleItemMouseMove(optionIndex, groupIndex)"
+                        class="fly-select-item-container">
+                        <div
+                          [class.highlight]="isHighlight(optionIndex, groupIndex)"
+                          class="fly-select-item-wrapper">
+                          <ng-container *ngTemplateOutlet="optionTemplate ? optionTemplate : defaultOptionTemplate; context: { option: option }"></ng-container>
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </ng-container>
+        </ng-container>
+
+        <ng-container *ngIf="dataType === 'options'">
+          <ng-container *ngFor="let option of options; let optionIndex = index;">
+            <div
+              (click)="handleSelectItem(option)"
+              (mousemove)="handleItemMouseMove(optionIndex)"
+              class="fly-select-item-container">
+              <div
+                [class.highlight]="isHighlight(optionIndex)"
+                class="fly-select-item-wrapper">
+                <ng-container *ngTemplateOutlet="optionTemplate ? optionTemplate : defaultOptionTemplate; context: { option: option }"></ng-container>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
       </div>
     </div>
   </div>
 </div>
 
-<ng-template #defaultTempalte let-option="option">
+<ng-template #defaultOptionTemplate let-option="option">
   <span>{{option.label}}</span>
+</ng-template>
+
+<ng-template #defaultGroupTemplate let-group="group">
+  <span>{{group.groupLabel}}</span>
 </ng-template>

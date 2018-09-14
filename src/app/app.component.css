@@ -18,11 +18,30 @@
     flex: 1;
 }
 
-.hero-card .name-copmany {
+.hero-card .name-company {
     font-size: 12px;
     color: #777;
 }
 
+.hero-card .alias {
+    font-size: 16px;
+}
+
 .fly-select-item-wrapper:hover .name-copmany {
     color: #ddd !important;
+}
+
+.universe-card {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.universe-card .image {
+    margin-left: 10px;
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }

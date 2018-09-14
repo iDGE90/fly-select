@@ -18,6 +18,14 @@ export class AppComponent implements OnInit {
     },
     {
       id: 2,
+      name: 'Steve Rogers',
+      alias: 'Captain America',
+      gender: 'Male',
+      company: 'US Army',
+      avatar: 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Captain-Shield-512.png'
+    },
+    {
+      id: 3,
       name: 'Bruce Wayne',
       alias: 'Batman',
       gender: 'Male',
@@ -25,12 +33,58 @@ export class AppComponent implements OnInit {
       avatar: 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Batman-512.png'
     },
     {
-      id: 3,
+      id: 4,
       name: 'Clark Kent',
       alias: 'Superman',
       gender: 'Male',
       company: 'Daily Planet',
       avatar: 'https://cdn0.iconfinder.com/data/icons/superhero-2/256/Superman-512.png'
+    }
+  ];
+  groupsCustom = [
+    {
+      groupLabel: 'Marvel',
+      avatar: 'https://cdn3.iconfinder.com/data/icons/movie-company/129/MARVEL.png',
+      groupOptions: [
+        {
+          id: 1,
+          name: 'Tony Stark',
+          alias: 'Ironman',
+          gender: 'Male',
+          company: 'Stark Industries',
+          avatar: 'https://cdn0.iconfinder.com/data/icons/superhero-2/256/Ironman-512.png'
+        },
+        {
+          id: 2,
+          name: 'Steve Rogers',
+          alias: 'Captain America',
+          gender: 'Male',
+          company: 'US Army',
+          avatar: 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Captain-Shield-512.png'
+        }
+      ]
+    },
+    {
+      groupLabel: 'Disney',
+      avatar: 'https://cdn3.iconfinder.com/data/icons/movie-company/129/Disney.png',
+      groupOptions: [
+        {
+          id: 2,
+          name: 'Bruce Wayne',
+          alias: 'Batman',
+          gender: 'Male',
+          company: 'Wayne Enterprises',
+          avatar: 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Batman-512.png'
+        },
+        {
+          id: 3,
+          name: 'Clark Kent',
+          alias: 'Superman',
+          gender: 'Male',
+          company: 'Daily Planet',
+          avatar: 'https://cdn0.iconfinder.com/data/icons/superhero-2/256/Superman-512.png'
+        }
+      ]
     }
   ];
   select = [
@@ -45,6 +99,38 @@ export class AppComponent implements OnInit {
     {
       label: 'Clark Kent',
       value: 3
+    }
+  ];
+  groups = [
+    {
+      groupLabel: 'Marvel',
+      groupOptions: [
+        {
+          label: 'Tony Stark',
+          value: 1
+        },
+        {
+          label: 'Captain America',
+          value: 2
+        },
+        {
+          label: 'Agent Carter',
+          value: 3
+        }
+      ]
+    },
+    {
+      groupLabel: 'Disney',
+      groupOptions: [
+        {
+          label: 'Bruce Wayne',
+          value: 1
+        },
+        {
+          label: 'Clark Kent',
+          value: 2
+        }
+      ]
     }
   ];
 
