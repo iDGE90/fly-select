@@ -10,7 +10,7 @@
       <form [formGroup]="formOne">
         <fly-select
           (selected)="handleSelect($event)"
-          [options]="groupsCustom"
+          [data]="groupsCustom"
           [labelProperty]="'name'"
           [valueProperty]="'id'"
           [formControlName]="'select'">
@@ -42,7 +42,7 @@
       <form [formGroup]="formOne">
         <fly-select
           (selected)="handleSelect($event)"
-          [options]="data"
+          [data]="data"
           [labelProperty]="'name'"
           [valueProperty]="'id'"
           [formControlName]="'select'">
@@ -66,7 +66,7 @@
       <form [formGroup]="formTwo">
         <fly-select
           (selected)="handleSelect($event)"
-          [options]="groups"
+          [data]="groups"
           [placeholder]="'Select option'"
           [formControlName]="'select'">
         </fly-select>
@@ -79,7 +79,7 @@
       <form [formGroup]="formTwo">
         <fly-select
           (selected)="handleSelect($event)"
-          [options]="select"
+          [data]="select"
           [placeholder]="'Select option'"
           [formControlName]="'select'">
         </fly-select>

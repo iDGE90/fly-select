@@ -14,7 +14,7 @@ import {FlySelectModule} from 'fly-select';
 Add *fly-select* component in ...component.html
 ```html
 <fly-select
-    [options]="data">
+    [data]="data">
 </fly-select>
 ```
 
@@ -36,15 +36,11 @@ const data = [
 ];
 ```
 
-### Full Options:
+### Custom Options Template:
 ```html
 <fly-select
-    [options]="data"
-    [placeholder]="'Alright'"
-    [labelProperty]="'name'"
-    [valueProperty]="'gender'"
-    (selected)="handleSelected($event)">
-    <ng-template let-option="option">
+    [data]="data">
+    <ng-template let-option="option" flySelectItemBody>
         <div class="hero-card">
             <div class="image" [style.backgroundImage]="'url(' + option.original.avatar + ')'"></div>
         
@@ -83,6 +79,58 @@ const data = [
 ];
 ```
 
+### Groups Custom Template:
+```html
+<form [formGroup]="formOne">
+    <fly-select
+      (selected)="handleSelect($event)"
+      [data]="groups"
+      [labelProperty]="'name'"
+      [valueProperty]="'id'"
+      [formControlName]="'select'">
+        <ng-template let-group="group" flySelectGroupBody>
+            <div class="universe-card">
+                <div class="image" [style.backgroundImage]="'url(' + group.groupOriginal.avatar + ')'"></div>
+                
+                <div class="info">{{group.groupLabel}}</div>
+            </div>
+        </ng-template>
+        
+        <ng-template let-option="option" flySelectItemBody>
+            <div class="hero-card">
+                <div class="image" [style.backgroundImage]="'url(' + option.original.avatar + ')'"></div>
+            
+                <div class="info">
+                    <div class="alias">{{option.original.alias}}</div>
+                    <div class="name-company">{{option.original.name}}, {{option.original.company}}</div>
+                </div>
+            </div>
+        </ng-template>
+    </fly-select>
+</form>
+```
+
+```js
+ groups = [
+    {
+      groupLabel: 'Marvel',
+      avatar: 'https://cdn3.iconfinder.com/data/icons/movie-company/129/MARVEL.png',
+      groupOptions: [
+        {
+          id: 1,
+          name: 'Tony Stark',
+          alias: 'Ironman',
+          gender: 'Male',
+          company: 'Stark Industries',
+          avatar: 'https://cdn0.iconfinder.com/data/icons/superhero-2/256/Ironman-512.png'
+        },
+        ...
+      ]
+    },
+    ...
+];
+```
+
 ### Keyboard events
 
 > Keyboard events available for esc, enter, arrowup, arrowdown
@@ -99,7 +147,7 @@ form = new FormGroup({
 
 ```html
 <fly-select
-    [options]="data"
+    [data]="data"
     [formControlName]="'hero'">
 </fly-select>
 ```
@@ -114,15 +162,22 @@ ngOnInit() {
 
 ### Inputs
 
-| Input | Description |
-| ------ | ------ |
-| placeholder | Custom text to show when no option is selected |
-| labelProperty | Property to get that label from |
-| valueProperty | Property to get that value from |
+| Input | Type | Description |
+| ------ | ------  | ------ |
+| placeholder | string | Custom text to show when no option is selected |
+| labelProperty | string | Property to get that label from |
+| valueProperty | string | Property to get that value from |
 
 
 ### Outputs
 
-| Output | Description |
+| Output | Type | Description |
+| ------ | ------ | ------ |
+| selected | EventEmitter | Option is selected |
+
+### Directives
+
+| Directive Name |  Description |
 | ------ | ------ |
-| selected | Event when option is selected |
+| flySelectGroupBody | Use it for customizing the groups template |
+| flySelectItemBody | Use it for customizing the options template |

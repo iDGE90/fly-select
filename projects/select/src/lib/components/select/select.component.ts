@@ -32,17 +32,11 @@ const SELECT_CONTROL_VALUE_ACCESSOR: any = {
   providers: [SELECT_CONTROL_VALUE_ACCESSOR],
   animations: [
     trigger('fade', [
-
-      // the "in" style determines the "resting" state of the element when it is visible.
       state('in', style({opacity: 1})),
-
-      // fade in when created. this could also be written as transition('void => *')
       transition(':enter', [
         style({opacity: 0}),
         animate(100)
       ]),
-
-      // fade out when destroyed. this could also be written as transition('void => *')
       transition(':leave',
         animate(100, style({opacity: 0})))
     ])
@@ -68,8 +62,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   @Input('valueProperty') valueProperty: string = null;
 
   // Select options data
-  @Input('options')
-  set options(arr) {
+  @Input('data')
+  set data(arr) {
     const extractedData = SelectService.extractData(arr, this.labelProperty, this.valueProperty);
 
     this._dataType = extractedData.dataType;

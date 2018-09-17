@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 import {SelectGroup, SelectHighlightIndex, SelectOption} from '../models/select-data';
-import * as ts from 'tsickle/src/typescript-2.4';
-import label = ts.ScriptElementKind.label;
 
 @Injectable({
   providedIn: 'root'
