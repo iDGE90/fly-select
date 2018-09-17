@@ -1,8 +1,10 @@
 # Fly Select
 
-Fly select is a simple dropdown select element with minimalistic design and customizable options.
+Fly select is a simple dropdown select element with minimalistic design and customizable options and groups.
 
 ![N|Solid](https://i.imgur.com/o3UhQSr.jpg)
+
+[Demo](https://angular-tc1e6k.stackblitz.io/)
 
 ### Simple usage:
 
@@ -39,7 +41,9 @@ const data = [
 ### Custom Options Template:
 ```html
 <fly-select
-    [data]="data">
+    [data]="data"
+    [labelProperty]="'name'"
+    [valueProperty]="'id'">
     <ng-template let-option="option" flySelectItemBody>
         <div class="hero-card">
             <div class="image" [style.backgroundImage]="'url(' + option.original.avatar + ')'"></div>
