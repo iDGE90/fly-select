@@ -31,8 +31,8 @@ export class AppComponent implements OnInit {
       ]
     },
     {
-      groupLabel: 'Disney',
-      avatar: 'https://cdn3.iconfinder.com/data/icons/movie-company/129/Disney.png',
+      groupLabel: 'DC',
+      avatar: 'https://cdn3.iconfinder.com/data/icons/movie-company/129/DC.png',
       groupOptions: [
         {
           id: 2,
@@ -106,7 +106,7 @@ export class AppComponent implements OnInit {
       ]
     },
     {
-      groupLabel: 'Disney',
+      groupLabel: 'DC',
       groupOptions: [
         {
           label: 'Bruce Wayne',
