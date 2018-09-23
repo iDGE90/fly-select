@@ -1,26 +1,33 @@
 # Fly Select
 
-Fly select is a simple dropdown select element with minimalistic design and customizable options and groups.
+*Fly Select* is a simple dropdown select element for Angular 6+. Used to display options and groups of options with minimalistic design.
 
 ![N|Solid](https://i.imgur.com/o3UhQSr.jpg)
 
 [Demo](https://angular-tc1e6k.stackblitz.io/)
 
-### Simple usage:
+### Instaling
+Install the package from npm:
 
-Add *FlySelectModule* in imports array in *AppModule*
+```
+npm i fly-select
+```
+
+### Simple usage
+
+Add the *FlySelectModule* in the imports array in *AppModule*:
 ```ts
 import {FlySelectModule} from 'fly-select';
 ```
 
-Add *fly-select* component in ...component.html
+Add the *fly-select* component in your component:
 ```html
 <fly-select
     [data]="data">
 </fly-select>
 ```
 
-Add the *data* array in ...component.ts
+Add the *data* array in you component class:
 ```js
 const data = [
     {
@@ -38,7 +45,32 @@ const data = [
 ];
 ```
 
-### Custom Options Template:
+The basic data structure (obecjts in the array must have *label* and *value* properites) looks like the above example, but you can use a different structure. If your data don't have *label* nad *value* properties, there is no need to transform the data to the previous structure. In this case you specify two additioanl inputs (*labelProperty*, *valueProperty*) on the component:
+
+```html
+<fly-select
+    [data]="data"
+    [labelProperty]="'name'"
+    [valueProperty]="'id'">
+</fly-select>
+```
+
+```js
+const data = [
+    {
+        id: 1,
+        name: 'Tony Stark',
+        alias: 'Ironman',
+        company: 'Stark Industries',
+        avatar: 'https://cdn0.iconfinder.com/data/icons/superhero-2/256/Ironman-512.png'
+    }
+];
+```
+
+### Custom Option Templates
+
+You can customize the options by adding template inside the *fly-select* component with the directive *flySelectItemBody*, you can use the data inside the template if you create *option* (which will contain the original data under the property *original*) varaible:
+
 ```html
 <fly-select
     [data]="data"
@@ -57,41 +89,37 @@ const data = [
 </fly-select>
 ```
 
+### Groups
+
+*Fly Select* support option groups, the data structure is different from previous examples. Group objects must contain *groupLabel* and *groupOptions* properties.
+
 ```js
-const data = [
+groups = [
     {
-        id: 1,
-        name: 'Tony Stark',
-        alias: 'Ironman',
-        company: 'Stark Industries',
-        avatar: 'https://cdn0.iconfinder.com/data/icons/superhero-2/256/Ironman-512.png'
-    },
-    {
-        id: 2,
-        name: 'Bruce Wayne',
-        alias: 'Batman',
-        company: 'Wayne Enterprises',
-        avatar: 'https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Batman-512.png'
-    },
-    {
-        id: 3,
-        name: 'Clark Kent',
-        alias: 'Superman',
-        company: 'Daily Planet',
-        avatar: 'https://cdn0.iconfinder.com/data/icons/superhero-2/256/Superman-512.png'
+        groupLabel: 'Marvel',
+        avatar: 'https://cdn3.iconfinder.com/data/icons/movie-company/129/MARVEL.png',
+        groupOptions: [
+            {
+                  id: 1,
+                  name: 'Tony Stark',
+                  alias: 'Ironman',
+                  gender: 'Male',
+                  company: 'Stark Industries',
+                  avatar: 'https://cdn0.iconfinder.com/data/icons/superhero-2/256/Ironman-512.png'
+            }
+        ]
     }
 ];
 ```
 
-### Groups Custom Template:
+You can also change the body of the group label by adding template inside *fly-select* component with directive *flySelectGroupBody*. You can access the group data by creating *group* variable in the template, if your data objects have more properties they will be moved in the *groupOriginal*.
+
 ```html
 <form [formGroup]="formOne">
     <fly-select
-      (selected)="handleSelect($event)"
       [data]="groups"
       [labelProperty]="'name'"
-      [valueProperty]="'id'"
-      [formControlName]="'select'">
+      [valueProperty]="'id'">
         <ng-template let-group="group" flySelectGroupBody>
             <div class="universe-card">
                 <div class="image" [style.backgroundImage]="'url(' + group.groupOriginal.avatar + ')'"></div>
@@ -100,48 +128,14 @@ const data = [
             </div>
         </ng-template>
         
-        <ng-template let-option="option" flySelectItemBody>
-            <div class="hero-card">
-                <div class="image" [style.backgroundImage]="'url(' + option.original.avatar + ')'"></div>
-            
-                <div class="info">
-                    <div class="alias">{{option.original.alias}}</div>
-                    <div class="name-company">{{option.original.name}}, {{option.original.company}}</div>
-                </div>
-            </div>
-        </ng-template>
+        <ng-template let-option="option" flySelectItemBody>...</ng-template>
     </fly-select>
 </form>
 ```
 
-```js
- groups = [
-    {
-      groupLabel: 'Marvel',
-      avatar: 'https://cdn3.iconfinder.com/data/icons/movie-company/129/MARVEL.png',
-      groupOptions: [
-        {
-          id: 1,
-          name: 'Tony Stark',
-          alias: 'Ironman',
-          gender: 'Male',
-          company: 'Stark Industries',
-          avatar: 'https://cdn0.iconfinder.com/data/icons/superhero-2/256/Ironman-512.png'
-        },
-        ...
-      ]
-    },
-    ...
-];
-```
-
-### Keyboard events
-
-> Keyboard events available for esc, enter, arrowup, arrowdown
-
 ### Reactive Forms
 
-You can also use it with reactive forms.
+You can use the component with reactive forms:
 
 ```js
 form = new FormGroup({
@@ -168,6 +162,7 @@ ngOnInit() {
 
 | Input | Type | Description |
 | ------ | ------  | ------ |
+| data | Array | Data of the options or the groups |
 | placeholder | string | Custom text to show when no option is selected |
 | labelProperty | string | Property to get that label from |
 | valueProperty | string | Property to get that value from |
@@ -177,7 +172,7 @@ ngOnInit() {
 
 | Output | Type | Description |
 | ------ | ------ | ------ |
-| selected | EventEmitter | Option is selected |
+| selected | EventEmitter | Emitted when option is selected |
 
 ### Directives
 
@@ -185,3 +180,13 @@ ngOnInit() {
 | ------ | ------ |
 | flySelectGroupBody | Use it for customizing the groups template |
 | flySelectItemBody | Use it for customizing the options template |
+
+### Keyboard events
+
+Keyboard events are available for esc, enter, arrowup, arrowdown.
+
+| Key | Description |
+| ------ | ------ |
+| Esc | Close the select if opened |
+| Enter | Select option from the select if highlighted |
+| ArrowUp/ArrowDown | Navigate through the options |

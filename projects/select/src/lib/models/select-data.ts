@@ -7,6 +7,7 @@ export interface SelectOption {
 export interface SelectGroup {
   groupLabel: string | number;
   groupOptions: Array<SelectOption>;
+  groupOriginal: any;
 }
 
 export interface SelectHighlightIndex {

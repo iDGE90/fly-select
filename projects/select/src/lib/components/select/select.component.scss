@@ -1,11 +1,11 @@
-:host {
+fly-select {
   width: 100%;
   outline: none;
-}
 
-:host(.host-focus) {
-  .fly-select-head-wrapper {
-    border-color: #4647ca;
+  &.host-focus {
+    .fly-select-head-wrapper {
+      border-color: #4647ca;
+    }
   }
 }
 

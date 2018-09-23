@@ -1,12 +1,17 @@
 <div class="fly-select-container">
   <div class="fly-select-wrapper" [class.open]="isOpen">
     <div class="fly-select-head-container">
-      <div class="fly-select-head-wrapper" [class.disabled]="disabled" (click)="handleHeadClick()">
+      <div
+          (click)="handleHeadClick()"
+          class="fly-select-head-wrapper"
+          [class.disabled]="disabled">
         <span>{{selectedOption ? selectedOption.label : placeholder}}</span>
       </div>
     </div>
     <div class="fly-select-body-container" *ngIf="isOpen" [@fade]>
-      <div class="fly-select-body-wrapper">
+      <div
+          #selectBodyWrapper
+          class="fly-select-body-wrapper">
         <ng-container *ngIf="dataType === 'groups'">
           <ng-container *ngFor="let group of groups; let groupIndex = index;">
             <div class="fly-select-group-container">

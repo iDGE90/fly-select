@@ -1,16 +1,17 @@
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ContentChild,
+  ContentChild, DoCheck,
   ElementRef,
   EventEmitter,
   forwardRef,
   HostBinding,
   HostListener,
-  Input,
+  Input, KeyValueChangeRecord, KeyValueDiffer, KeyValueDiffers, OnChanges,
   OnInit,
-  Output,
-  TemplateRef
+  Output, SimpleChanges,
+  TemplateRef, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import {SelectGroup, SelectHighlightIndex, SelectOption} from '../../models/select-data';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
@@ -30,6 +31,7 @@ const SELECT_CONTROL_VALUE_ACCESSOR: any = {
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
   providers: [SELECT_CONTROL_VALUE_ACCESSOR],
+  encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('fade', [
       state('in', style({opacity: 1})),
@@ -42,20 +44,25 @@ const SELECT_CONTROL_VALUE_ACCESSOR: any = {
     ])
   ]
 })
-export class SelectComponent implements OnInit, ControlValueAccessor {
+export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
+  private _originalData = null;
   private _options: Array<SelectOption> = [];
   private _groups: Array<SelectGroup> = [];
   private _placeholder: string = null;
   private _dataType: string = null;
 
+  private differ: KeyValueDiffer<string, any>;
+
   @HostBinding() tabindex = 1;
   @HostBinding('class.host-focus') focused = false;
 
-  @ContentChild(SelectGroupBodyDirective, { read: TemplateRef })
+  @ContentChild(SelectGroupBodyDirective, {read: TemplateRef})
   groupTemplate: TemplateRef<any>;
 
-  @ContentChild(SelectItemBodyDirective, { read: TemplateRef })
+  @ContentChild(SelectItemBodyDirective, {read: TemplateRef})
   optionTemplate: TemplateRef<any>;
+
+  @ViewChild('selectBodyWrapper') selectBodyWrapper: ElementRef;
 
   // Properties to convert array into proper shape
   @Input('labelProperty') labelProperty: string = null;
@@ -64,6 +71,7 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   // Select options data
   @Input('data')
   set data(arr) {
+    this._originalData = arr;
     const extractedData = SelectService.extractData(arr, this.labelProperty, this.valueProperty);
 
     this._dataType = extractedData.dataType;
@@ -74,6 +82,10 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
     if (extractedData.dataType === 'options') {
       this._options = extractedData.options;
+    }
+
+    if (!this.differ && arr) {
+      this.differ = this.differs.find(arr).create();
     }
   }
 
@@ -173,6 +185,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
           }
         }
       }
+
+      SelectService.setScrollFromBottom(this.selectBodyWrapper, this.data, this.highlightIndex);
     } else {
       // If select is closed
       if (this.focused) {
@@ -201,6 +215,8 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
           this.highlightIndex.optionIndex--;
         }
       }
+
+      SelectService.setScrollFromTop(this.selectBodyWrapper, this.data, this.highlightIndex);
     }
   }
 
@@ -222,7 +238,9 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
 
   @HostListener('focus')
   onHostFocus() {
-    this.focused = true;
+    if (!this.disabled) {
+      this.focused = true;
+    }
   }
 
   @HostListener('blur')
@@ -232,10 +250,17 @@ export class SelectComponent implements OnInit, ControlValueAccessor {
   }
 
   constructor(private cdr: ChangeDetectorRef,
-              private eRef: ElementRef) {
+              private eRef: ElementRef,
+              private differs: KeyValueDiffers) {
   }
 
   ngOnInit() {
+  }
+
+  ngDoCheck() {
+    if (this.differ && this.differ.diff(this._originalData)) {
+      this.data = this._originalData;
+    }
   }
 
   handleHeadClick() {
