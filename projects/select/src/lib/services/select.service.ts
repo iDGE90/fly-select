@@ -1,79 +1,82 @@
 import {Injectable} from '@angular/core';
-import {SelectGroup, SelectHighlightIndex, SelectOption} from '../models/select-data';
+import {
+  SelectData, SelectGroupData, SelectHighlightIndex, SelectOptionData
+} from '../models/select-data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelectService {
-  constructor() {
-  }
+  static extractData(arr, labelProp, valueProp, groupLabelProp, groupOptionsProp): SelectData {
+    const optionLabelString = labelProp ? labelProp : 'label';
+    const optionValueString = valueProp ? valueProp : 'value';
+    const groupLabelString = groupLabelProp ? groupLabelProp : 'groupLabel';
+    const groupOptionsString = groupOptionsProp ? groupOptionsProp : 'groupOptions';
 
-  static extractData(arr, labelProp, valueProp): {
-    dataType: 'groups' | 'options';
-    options?: Array<SelectOption>;
-    groups?: Array<SelectGroup>
-  } {
-    const data = [];
     let dataType = null;
+    const data = [];
 
-    for (const group of arr) {
-      if (group.hasOwnProperty('groupLabel') && group.hasOwnProperty('groupOptions')) {
-        const groupItem = {
-          groupLabel: group.groupLabel,
-          groupOriginal: {},
+    for (const item of arr) {
+      const groupData = this.getGroupData(item, groupLabelString, groupOptionsString);
+
+      if (groupData) {
+        const group = {
+          groupLabel: groupData.label,
+          groupOriginal: groupData.original,
           groupOptions: []
         };
 
         dataType = 'groups';
 
-        if (Array.isArray(group.groupOptions)) {
-          for (const option of group.groupOptions) {
-            if ((option.hasOwnProperty('label') && option.hasOwnProperty('value'))
-              || (option.hasOwnProperty(labelProp) && option.hasOwnProperty(valueProp))) {
-              groupItem.groupOptions.push({
-                label: labelProp ? option[labelProp] : option.label,
-                value: valueProp ? option[valueProp] : option.value,
-                original: option
-              });
-            }
+        for (const option of groupData.options) {
+          // Option Data, in group
+          const x = this.getOptionData(option, optionLabelString, optionValueString);
+
+          if (x) {
+            group.groupOptions.push(x);
           }
         }
 
         // Populate group original without group options
-        for (const prop in group) {
-          if (group.hasOwnProperty(prop) && prop !== 'groupOptions') {
-            groupItem.groupOriginal[prop] = group[prop];
-          }
+        // for (const prop in item) {
+        //   if (item.hasOwnProperty(prop) && prop !== 'groupOptions') {
+        //     group.groupOriginal[prop] = item[prop];
+        //   }
+        // }
+
+        data.push(group);
+      } else {
+        // Option Data
+        const y = this.getOptionData(item, optionLabelString, optionValueString);
+
+        if (y) {
+          dataType = 'options';
+          data.push(y);
         }
-
-        data.push(groupItem);
-      }
-
-      if ((group.hasOwnProperty('label') && group.hasOwnProperty('value'))
-        || (group.hasOwnProperty(labelProp) && group.hasOwnProperty(valueProp))) {
-        dataType = 'options';
-
-        data.push({
-          label: labelProp ? group[labelProp] : group.label,
-          value: valueProp ? group[valueProp] : group.value,
-          original: group
-        });
       }
     }
 
     if (dataType === 'groups') {
-      return {
-        dataType,
-        groups: data
-      };
+      return {dataType, groups: data};
     }
 
     if (dataType === 'options') {
-      return {
-        dataType,
-        options: data
-      };
+      return {dataType, options: data};
     }
+  }
+
+  static getOptionData(obj, labelProp, valueProp): SelectOptionData {
+    const label = this.getValueByStringPath(obj, labelProp);
+    const value = this.getValueByStringPath(obj, valueProp);
+
+    return (label && value) ? {label, value, original: obj} : null;
+  }
+
+  static getGroupData(obj, labelProp, optionsProp): SelectGroupData {
+    const label = this.getValueByStringPath(obj, labelProp);
+    const options = this.getValueByStringPath(obj, optionsProp);
+
+    return (label && options && Array.isArray(options)) ? {label, options, original: obj} : null;
   }
 
   static resetHighlightIndex(): SelectHighlightIndex {
@@ -164,5 +167,31 @@ export class SelectService {
       optionHeight: option ? option.offsetHeight : 0,
       labelHeight: label ? label.offsetHeight : 0
     };
+  }
+
+  static getValueByStringPath(o, s) {
+    if (!s) {
+      return;
+    }
+
+    let strPath = '';
+
+    for (let i = 0; i < s.length; i++) {
+      strPath += s[i] === '[' || s[i] === ']' ? '.' : s[i];
+    }
+
+    const splitPath = strPath.split('.');
+
+    for (let i = 0; i < splitPath.length; ++i) {
+      const k = splitPath[i];
+
+      if (k in o) {
+        o = o[k];
+      } else {
+        return;
+      }
+    }
+
+    return o;
   }
 }

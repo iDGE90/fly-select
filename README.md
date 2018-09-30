@@ -91,7 +91,7 @@ You can customize the options by adding template inside the *fly-select* compone
 
 ### Groups
 
-*Fly Select* support option groups, the data structure is different from previous examples. Group objects must contain *groupLabel* and *groupOptions* properties.
+*Fly Select* support option groups, the data structure is different from previous examples. Group objects must contain *groupLabel* and *groupOptions* properties or two additional inputs (*groupLabelProperty*, *groupOptionsProperty*) to be specified on the component.
 
 ```js
 groups = [
@@ -164,8 +164,10 @@ ngOnInit() {
 | ------ | ------  | ------ |
 | data | Array | Data of the options or the groups |
 | placeholder | string | Custom text to show when no option is selected |
-| labelProperty | string | Property to get that label from |
-| valueProperty | string | Property to get that value from |
+| labelProperty | string | Property to get the option label from |
+| valueProperty | string | Property to get the option value from |
+| groupLabelProperty | string | Property to get the group label value from |
+| groupOptionsProperty | string | Property to get the group options from |
 
 
 ### Outputs

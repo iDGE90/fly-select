@@ -14,3 +14,21 @@ export interface SelectHighlightIndex {
   optionIndex: number;
   groupIndex: number;
 }
+
+export interface SelectData {
+  dataType: 'groups' | 'options';
+  options?: Array<SelectOption>;
+  groups?: Array<SelectGroup>;
+}
+
+export interface SelectOptionData {
+  label: string | number;
+  value: string | number;
+  original: any;
+}
+
+export interface SelectGroupData {
+  label: string | number;
+  options: Array<any>;
+  original: any;
+}

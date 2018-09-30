@@ -67,25 +67,35 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
   // Properties to convert array into proper shape
   @Input('labelProperty') labelProperty: string = null;
   @Input('valueProperty') valueProperty: string = null;
+  @Input('groupLabelProperty') groupLabelProperty: string = null;
+  @Input('groupOptionsProperty') groupOptionsProperty: string = null;
 
   // Select options data
   @Input('data')
   set data(arr) {
     this._originalData = arr;
-    const extractedData = SelectService.extractData(arr, this.labelProperty, this.valueProperty);
 
-    this._dataType = extractedData.dataType;
+    const olp = this.labelProperty;
+    const ovp = this.valueProperty;
+    const glp = this.groupLabelProperty;
+    const gop = this.groupOptionsProperty;
 
-    if (extractedData.dataType === 'groups') {
-      this._groups = extractedData.groups;
-    }
+    const extractedData = SelectService.extractData(arr, olp, ovp, glp, gop);
 
-    if (extractedData.dataType === 'options') {
-      this._options = extractedData.options;
-    }
+    if (extractedData) {
+      this._dataType = extractedData.dataType;
 
-    if (!this.differ && arr) {
-      this.differ = this.differs.find(arr).create();
+      if (extractedData.dataType === 'groups') {
+        this._groups = extractedData.groups;
+      }
+
+      if (extractedData.dataType === 'options') {
+        this._options = extractedData.options;
+      }
+
+      if (!this.differ && arr) {
+        this.differ = this.differs.find(arr).create();
+      }
     }
   }
 
@@ -258,9 +268,16 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
   }
 
   ngDoCheck() {
-    if (this.differ && this.differ.diff(this._originalData)) {
-      this.data = this._originalData;
-    }
+    // console.log('do check, and different', this._originalData);
+
+
+    // this.cdr.markForCheck();
+    //
+    // this.data = this._originalData;
+
+    // if (this.differ && this.differ.diff(this._originalData)) {
+    //   this.data = this._originalData;
+    // }
   }
 
   handleHeadClick() {
