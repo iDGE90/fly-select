@@ -265,8 +265,8 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
 
   @HostListener('blur')
   onHostBlur() {
-    // this.focused = false;
-    // this.close();
+    this.focused = false;
+    this.close();
   }
 
   constructor(private cdr: ChangeDetectorRef,

@@ -16,7 +16,10 @@
     "javascript",
     "typescript",
     "select",
-    "dropdown"
+    "options",
+    "groups",
+    "dropdown",
+    "custom"
   ],
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
