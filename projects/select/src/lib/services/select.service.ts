@@ -160,8 +160,8 @@ export class SelectService {
     optionHeight: number;
     labelHeight: number;
   } {
-    const option = wrapperEl.nativeElement.getElementsByClassName('fly-select-item-container')[0];
-    const label = wrapperEl.nativeElement.getElementsByClassName('fly-select-group-label')[0];
+    const option = wrapperEl.nativeElement.getElementsByClassName('fly-select-option-container')[0];
+    const label = wrapperEl.nativeElement.getElementsByClassName('fly-select-group-label-wrapper')[0];
 
     return {
       optionHeight: option ? option.offsetHeight : 0,

@@ -6,7 +6,19 @@
 
 [Demo](https://angular-tc1e6k.stackblitz.io/)
 
-### Instaling
+### Contents
+- [Installing](#nstalling)
+- [Simple usage](#simple-usage)
+- [Custom Option Templates](#custom-option-templates)
+- [Groups](#groups)
+- [Reactive Forms](#reactive-forms)
+- [Styling](#styling)
+- [Inputs](#inputs)
+- [Outputs](#outputs)
+- [Directives](#directives)
+- [Keyboard Events](#keyboard-events)
+
+### Installing
 Install the package from npm:
 
 ```
@@ -158,6 +170,21 @@ ngOnInit() {
 }
 ```
 
+### Styling
+
+You can style the select to your need, just set the input *style* to *false* on the component and you are good to go. Useful css classes for stying:
+
+- .fly-select-head-wrapper (have :hover)
+- .fly-select-body-wrapper
+- .fly-select-option-wrapper
+- .fly-select-group-wrapper
+- .fly-select-group-label
+
+- fly-select.host-focus
+- .fly-select-wrapper.open
+- .fly-select-head-wrapper.disabled
+- .fly-select-option-wrapper.highlight
+
 ### Inputs
 
 | Input | Type | Description |
@@ -168,6 +195,7 @@ ngOnInit() {
 | valueProperty | string | Property to get the option value from |
 | groupLabelProperty | string | Property to get the group label value from |
 | groupOptionsProperty | string | Property to get the group options from |
+| style | boolean | Switch component styling |
 
 
 ### Outputs

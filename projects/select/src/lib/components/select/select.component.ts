@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChild, DoCheck,
@@ -8,10 +7,14 @@ import {
   forwardRef,
   HostBinding,
   HostListener,
-  Input, KeyValueChangeRecord, KeyValueDiffer, KeyValueDiffers, OnChanges,
+  Input,
+  KeyValueDiffer,
+  KeyValueDiffers,
   OnInit,
-  Output, SimpleChanges,
-  TemplateRef, ViewChild, ViewEncapsulation
+  Output,
+  TemplateRef,
+  ViewChild,
+  ViewEncapsulation
 } from '@angular/core';
 import {SelectGroup, SelectHighlightIndex, SelectOption} from '../../models/select-data';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
@@ -56,6 +59,8 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
   @HostBinding() tabindex = 1;
   @HostBinding('class.host-focus') focused = false;
 
+  @HostBinding('class.styleless') _style = false;
+
   @ContentChild(SelectGroupBodyDirective, {read: TemplateRef})
   groupTemplate: TemplateRef<any>;
 
@@ -69,6 +74,11 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
   @Input('valueProperty') valueProperty: string = null;
   @Input('groupLabelProperty') groupLabelProperty: string = null;
   @Input('groupOptionsProperty') groupOptionsProperty: string = null;
+
+  @Input('style')
+  set style(boolean) {
+    this._style = !boolean;
+  }
 
   // Select options data
   @Input('data')
@@ -255,8 +265,8 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
 
   @HostListener('blur')
   onHostBlur() {
-    this.focused = false;
-    this.close();
+    // this.focused = false;
+    // this.close();
   }
 
   constructor(private cdr: ChangeDetectorRef,

@@ -27,20 +27,20 @@
     font-size: 16px;
 }
 
-.fly-select-item-wrapper:hover .name-copmany {
+.fly-select-option-wrapper.highlight .name-company {
     color: #ddd !important;
 }
 
 .universe-card {
     display: flex;
-    flex-direction: row-reverse;
     align-items: center;
 }
 
 .universe-card .image {
-    margin-left: 10px;
-    width: 25px;
-    height: 25px;
+    margin-left: 7px;
+    margin-right: 17px;
+    width: 15px;
+    height: 15px;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

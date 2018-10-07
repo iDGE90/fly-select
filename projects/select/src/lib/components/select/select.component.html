@@ -16,7 +16,7 @@
           <ng-container *ngFor="let group of groups; let groupIndex = index;">
             <div class="fly-select-group-container">
               <div class="fly-select-group-wrapper">
-                <div class="fly-select-group-label">
+                <div class="fly-select-group-label-wrapper">
                   <ng-container *ngTemplateOutlet="groupTemplate ? groupTemplate : defaultGroupTemplate; context: { group: group }"></ng-container>
                 </div>
 
@@ -26,10 +26,10 @@
                       <div
                         (click)="handleSelectItem(option)"
                         (mousemove)="handleItemMouseMove(optionIndex, groupIndex)"
-                        class="fly-select-item-container">
+                        class="fly-select-option-container">
                         <div
                           [class.highlight]="isHighlight(optionIndex, groupIndex)"
-                          class="fly-select-item-wrapper">
+                          class="fly-select-option-wrapper">
                           <ng-container *ngTemplateOutlet="optionTemplate ? optionTemplate : defaultOptionTemplate; context: { option: option }"></ng-container>
                         </div>
                       </div>
@@ -46,10 +46,10 @@
             <div
               (click)="handleSelectItem(option)"
               (mousemove)="handleItemMouseMove(optionIndex)"
-              class="fly-select-item-container">
+              class="fly-select-option-container">
               <div
                 [class.highlight]="isHighlight(optionIndex)"
-                class="fly-select-item-wrapper">
+                class="fly-select-option-wrapper">
                 <ng-container *ngTemplateOutlet="optionTemplate ? optionTemplate : defaultOptionTemplate; context: { option: option }"></ng-container>
               </div>
             </div>

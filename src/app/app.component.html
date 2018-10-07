@@ -4,86 +4,38 @@
       <h1>Fly Select</h1>
     </div>
 
+    <h3>Layouts</h3>
+
     <div class="io-line">
-      <p>Custom groups layout</p>
+      <p>Default Options Layout</p>
 
-      <form [formGroup]="formOne">
-        <fly-select
-          (selected)="handleSelect($event)"
-          [data]="groupsCustom"
-          [labelProperty]="'name'"
-          [valueProperty]="'id'"
-          [formControlName]="'select'">
-          <ng-template let-group="group" flySelectGroupBody>
-            <div class="universe-card">
-              <div class="image" [style.backgroundImage]="'url(' + group.groupOriginal.avatar + ')'"></div>
-
-              <div class="info">{{group.groupLabel}}</div>
-            </div>
-          </ng-template>
-
-          <ng-template let-option="option" flySelectItemBody>
-            <div class="hero-card">
-              <div class="image" [style.backgroundImage]="'url(' + option.original.avatar + ')'"></div>
-
-              <div class="info">
-                <div class="alias">{{option.original.alias}}</div>
-                <div class="name-company">{{option.original.name}}, {{option.original.company}}</div>
-              </div>
-            </div>
-          </ng-template>
-        </fly-select>
-      </form>
+      <app-options></app-options>
     </div>
 
     <div class="io-line">
-      <p>Custom options layout</p>
+      <p>Custom Options Layout</p>
 
-      <form [formGroup]="formOne">
-        <fly-select
-          (selected)="handleSelect($event)"
-          [data]="data"
-          [labelProperty]="'name'"
-          [valueProperty]="'id'"
-          [formControlName]="'select'">
-          <ng-template let-option="option" flySelectItemBody>
-            <div class="hero-card">
-              <div class="image" [style.backgroundImage]="'url(' + option.original.avatar + ')'"></div>
-
-              <div class="info">
-                <div class="alias">{{option.original.alias}}</div>
-                <div class="name-company">{{option.original.name}}, {{option.original.company}}</div>
-              </div>
-            </div>
-          </ng-template>
-        </fly-select>
-      </form>
+      <app-custom-options></app-custom-options>
     </div>
 
     <div class="io-line">
-      <p>Default groups layout</p>
+      <p>Default Groups Layout</p>
 
-      <form [formGroup]="formTwo">
-        <fly-select
-          (selected)="handleSelect($event)"
-          [data]="groups"
-          [placeholder]="'Select option'"
-          [formControlName]="'select'">
-        </fly-select>
-      </form>
+      <app-groups></app-groups>
     </div>
 
     <div class="io-line">
-      <p>Default options layout</p>
+      <p>Default Groups Layout</p>
 
-      <form [formGroup]="formTwo">
-        <fly-select
-          (selected)="handleSelect($event)"
-          [data]="select"
-          [placeholder]="'Select option'"
-          [formControlName]="'select'">
-        </fly-select>
-      </form>
+      <app-custom-groups></app-custom-groups>
+    </div>
+
+    <h3>Styling</h3>
+
+    <div class="io-line">
+      <p>Styled Default Options Layout</p>
+
+      <app-style-options></app-style-options>
     </div>
   </div>
 </div>
