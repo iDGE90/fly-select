@@ -7,7 +7,7 @@
 [Demo](https://angular-tc1e6k.stackblitz.io/)
 
 ### Contents
-- [Installing](#nstalling)
+- [Installing](#installing)
 - [Simple usage](#simple-usage)
 - [Custom Option Templates](#custom-option-templates)
 - [Groups](#groups)
