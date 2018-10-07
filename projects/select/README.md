@@ -174,14 +174,15 @@ ngOnInit() {
 
 You can style the select to your need, just set the input *style* to *false* on the component and you are good to go. Useful css classes for stying:
 
-- fly-select.host-focus
 - .fly-select-head-wrapper (have :hover)
 - .fly-select-body-wrapper
 - .fly-select-option-wrapper
 - .fly-select-group-wrapper
 - .fly-select-group-label
 
+Added classes after some event:
 
+- fly-select.host-focus
 - .fly-select-wrapper.open
 - .fly-select-head-wrapper.disabled
 - .fly-select-option-wrapper.highlight
