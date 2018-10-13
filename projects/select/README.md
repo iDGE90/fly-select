@@ -22,7 +22,7 @@
 Install the package from npm:
 
 ```
-npm i fly-select
+npm i fly-select --save
 ```
 
 ### Simple usage

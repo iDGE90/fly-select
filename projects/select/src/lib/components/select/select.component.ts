@@ -48,7 +48,7 @@ const SELECT_CONTROL_VALUE_ACCESSOR: any = {
   ]
 })
 export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
-  private _originalData = null;
+  private _originalData: any = null;
   private _options: Array<SelectOption> = [];
   private _groups: Array<SelectGroup> = [];
   private _placeholder: string = null;
@@ -58,7 +58,6 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
 
   @HostBinding() tabindex = 1;
   @HostBinding('class.host-focus') focused = false;
-
   @HostBinding('class.styleless') _style = false;
 
   @ContentChild(SelectGroupBodyDirective, {read: TemplateRef})
@@ -158,7 +157,7 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
   highlightIndex: SelectHighlightIndex = SelectService.resetHighlightIndex();
 
   // Hide select list if clicked outside component
-  @HostListener('document:click', ['$event'])
+  @HostListener('click', ['$event'])
   handleClickOutsideHost(event) {
     if (!this.eRef.nativeElement.contains(event.target)) {
       this.close();
@@ -166,14 +165,14 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
   }
 
   // Hide select list if esc pressed
-  @HostListener('document:keyup.esc')
+  @HostListener('keyup.esc')
   handleKeyboardEsc() {
     this.onHostBlur();
     this.close();
   }
 
   // Highlight option if arrow key pressed
-  @HostListener('document:keydown.arrowdown')
+  @HostListener('keydown.arrowdown')
   handleKeyboardArrowDown() {
     if (this.isOpen) {
       // If select is open
@@ -216,7 +215,7 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
   }
 
   // Highlight option if arrow key pressed
-  @HostListener('document:keydown.arrowup')
+  @HostListener('keydown.arrowup')
   handleKeyboardArrowUp() {
     if (this.isOpen) {
       if (this.dataType === 'groups') {
@@ -241,7 +240,7 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
   }
 
   // Select highlighted option when key enter pressed
-  @HostListener('document:keyup.enter')
+  @HostListener('keyup.enter')
   handleKeyboardEnter() {
     if (this.isOpen && this.highlightIndex !== {optionIndex: -1, groupIndex: -1}) {
       if (this.dataType === 'groups') {
@@ -278,16 +277,13 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
   }
 
   ngDoCheck() {
-    // console.log('do check, and different', this._originalData);
+    if (this.differ) {
+      const changes = this.differ.diff(this._originalData);
 
-
-    // this.cdr.markForCheck();
-    //
-    // this.data = this._originalData;
-
-    // if (this.differ && this.differ.diff(this._originalData)) {
-    //   this.data = this._originalData;
-    // }
+      if (changes) {
+        this.data = this._originalData;
+      }
+    }
   }
 
   handleHeadClick() {
@@ -308,7 +304,7 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
     this.cdr.markForCheck();
   }
 
-  handleItemMouseMove(optionIndex: number, groupIndex: number = -1) {
+  handleItemMouseEnter(optionIndex: number, groupIndex: number = -1) {
     if (optionIndex !== this.highlightIndex.optionIndex || groupIndex !== this.highlightIndex.groupIndex) {
       this.highlightIndex = {
         optionIndex,
