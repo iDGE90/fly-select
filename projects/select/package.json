@@ -1,7 +1,7 @@
 {
   "name": "fly-select",
-  "version": "0.1.2",
-  "description": "Simple select element for Angular 6",
+  "version": "1.3.4",
+  "description": "Customizable select component for Angular 6",
   "author": "Igor Atanasov",
   "license": "MIT",
   "bugs": "https://github.com/iDGE90/fly-select/issues",
