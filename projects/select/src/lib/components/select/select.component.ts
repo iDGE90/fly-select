@@ -172,10 +172,12 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
   }
 
   // Highlight option if arrow key pressed
-  @HostListener('keydown.arrowdown')
-  handleKeyboardArrowDown() {
+  @HostListener('keydown.arrowdown', ['$event'])
+  handleKeyboardArrowDown(e: KeyboardEvent) {
+    // If select is open
     if (this.isOpen) {
-      // If select is open
+      e.preventDefault();
+
       if (this.dataType === 'groups') {
         if (this.highlightIndex.optionIndex === -1 && this.highlightIndex.groupIndex === -1) {
           // If there is no option selected
@@ -209,15 +211,19 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
     } else {
       // If select is closed
       if (this.focused) {
+        e.preventDefault();
         this.toggle();
       }
     }
   }
 
   // Highlight option if arrow key pressed
-  @HostListener('keydown.arrowup')
-  handleKeyboardArrowUp() {
+  @HostListener('keydown.arrowup', ['$event'])
+  handleKeyboardArrowUp(e: KeyboardEvent) {
+    // If select is open
     if (this.isOpen) {
+      e.preventDefault();
+
       if (this.dataType === 'groups') {
         if (this.highlightIndex.optionIndex !== 0 || this.highlightIndex.groupIndex !== 0) {
           if (this.highlightIndex.optionIndex === 0) {
@@ -293,7 +299,7 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
   handleSelectItem(item: SelectOption) {
     this.selectedOption = item;
     this.isOpen = false;
-    this.highlightIndex = SelectService.resetHighlightIndex();
+    // this.highlightIndex = SelectService.resetHighlightIndex();
 
     this.onHostBlur();
 
@@ -316,7 +322,21 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
   writeValue(obj: any): void {
     if (this.cdr) {
       if (obj) {
-        this.selectedOption = this.options.find(o => o.original === obj);
+        if (this.dataType === 'groups') {
+          for (let i = 0; i < this.groups.length; i++) {
+            const option = this.groups[i].groupOptions.find(o => o.original === obj);
+
+            if (option) {
+              this.selectedOption = option;
+              break;
+            }
+          }
+        }
+
+        if (this.dataType === 'options') {
+          this.selectedOption = this.options.find(o => o.original === obj);
+        }
+
       }
       this.cdr.markForCheck();
     }
@@ -346,6 +366,33 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
       && this.highlightIndex.groupIndex === groupIndex;
   }
 
+  // If there is default option, select it and scroll if out of view
+  selectAndScroll() {
+    if (this.highlightIndex.optionIndex === -1 && this.highlightIndex.groupIndex === -1) {
+      if (this.selectedOption) {
+        if (this.dataType === 'groups') {
+          for (let i = 0; i < this.groups.length; i++) {
+            const optionIndex = this.groups[i].groupOptions.indexOf(this.selectedOption);
+
+            if (optionIndex !== -1) {
+              this.highlightIndex.groupIndex = i;
+              this.highlightIndex.optionIndex = optionIndex;
+              break;
+            }
+          }
+        }
+
+        if (this.dataType === 'options') {
+          this.highlightIndex.optionIndex = this.options.indexOf(this.selectedOption);
+        }
+      }
+    }
+
+    setTimeout(() => {
+      SelectService.setScrollFromBottom(this.selectBodyWrapper, this.data, this.highlightIndex);
+    }, 25);
+  }
+
   // Hide select body
   close() {
     if (this.isOpen) {
@@ -357,7 +404,10 @@ export class SelectComponent implements OnInit, DoCheck, ControlValueAccessor {
   toggle() {
     if (!this.disabled) {
       this.isOpen = !this.isOpen;
-      this.highlightIndex = SelectService.resetHighlightIndex();
+
+      if (this.isOpen) {
+        this.selectAndScroll();
+      }
 
       if (!this.isOpen) {
         this.onTouchedCallback({});

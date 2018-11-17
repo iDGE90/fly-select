@@ -1,6 +1,6 @@
 # Fly Select
 
-*Fly Select* is a customizable select component for Angular 6+. Used to display options and groups of options with default minimalistic design.
+*Fly Select* is a customizable select component for Angular 6+. Used for displaying options and groups of options with default minimalistic design.
 
 ![N|Solid](https://i.imgur.com/o3UhQSr.jpg)
 
